@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             return userInfo == null
                 ? MaterialPageRoute(builder: (context) => LoginPage())
                 : MaterialPageRoute(
-                    builder: (context) => HomePage(userInfo: userInfo));
+                    builder: (context) => HomePage(userInfo: userInfo!));
           default:
             return null;
         }
