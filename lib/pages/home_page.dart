@@ -13,36 +13,35 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-
-  List<Widget> _widgetOptions = <Widget>[];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  List<Widget> _pages = [];
 
   @override
   void initState() {
     super.initState();
-    _widgetOptions = <Widget>[
-      Text('This is page 1'),
-      ContactPage(userId: widget.userInfo.userId),
-      Text('This is page 3'),
-      Text('This is page 4'),
-    ];
+    _pages
+      ..add(Text('This is page 1'))
+      ..add(ContactPage(userId: widget.userInfo.userId))
+      ..add(Text('This is page 3'))
+      ..add(Text('This is page 4'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
+        currentIndex: _selectedIndex,
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
@@ -61,8 +60,6 @@ class HomePageState extends State<HomePage> {
             label: '我',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
       ),
     );
   }
